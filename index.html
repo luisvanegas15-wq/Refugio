@@ -71,7 +71,7 @@ a{color:var(--ac)}
 <div id="scr"></div><div id="modal"></div>
 <script>
 /* ===== Licencia ===== */
-const APP_URL='https://luisvanegas15-wq.github.io/Refugio/',SOPORTE='',SECRET='',TRIAL=7;
+const APP_URL='https://luisvanegas15-wq.github.io/Refugio/',SOPORTE='573202903722',SECRET='',TRIAL=7;
 function h53(str,seed=0){let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}
 h1=Math.imul(h1^(h1>>>16),2246822507);h1^=Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507);h2^=Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0)}
 const normN=n=>(n||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'');
@@ -81,7 +81,7 @@ const normC=c=>{const x=(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'').replace(/
 const mem={};const store={get(k,d){try{const v=localStorage.getItem('rf_'+k);if(v!=null)return JSON.parse(v)}catch(e){}return k in mem?mem[k]:d},set(k,v){mem[k]=v;try{localStorage.setItem('rf_'+k,JSON.stringify(v))}catch(e){}}};
 let lic=store.get('lic',null),showAct=false,P=store.get('profile',null),moods=store.get('moods',[]),uses=store.get('uses',[]),thoughts=store.get('thoughts',[]),grat=store.get('grat',[]),plan=store.get('plan',{}),notes=store.get('notes',[]),tests=store.get('tests',[]),progs=store.get('progs',{}),contacts=store.get('contacts',[]);
 const save=()=>{store.set('profile',P);store.set('moods',moods);store.set('uses',uses);store.set('thoughts',thoughts);store.set('grat',grat);store.set('plan',plan);store.set('notes',notes);store.set('tests',tests);store.set('progs',progs);store.set('contacts',contacts)};
-const $=s=>document.querySelector(s);const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=s=>document.querySelector(s);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const today=()=>{const d=new Date();d.setHours(0,0,0,0);return d};const iso=d=>{d=new Date(d);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const toast=t=>{const d=document.createElement('div');d.className='toast';d.innerHTML=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2600)};
 let tab=(location.hash||'#inicio').slice(1),timer=null;const stopT=()=>{clearInterval(timer);clearTimeout(timer);timer=null;try{speechSynthesis.cancel()}catch(e){}try{if(snd){snd.stop();snd=null}}catch(e){}};let snd=null;
@@ -152,7 +152,7 @@ let ob={name:'',topics:[]};
 function vWelcome(){return `<div style="text-align:center;padding:30px 0 10px">${plant(12,150)}<h1 style="font-size:38px;margin-top:6px">Refu<span style="color:var(--ac)">gio</span></h1><p class="mut">Tu espacio de calma para los momentos difíciles</p></div>
 <div class="card"><label class="f" style="margin-top:0">¿Cómo te llamas?</label><input id="obn" value="${esc(ob.name)}" oninput="ob.name=this.value" placeholder="Tu nombre o apodo">
 <label class="f">¿Qué te gustaría trabajar? <span class="mut sm">(elige las que quieras)</span></label><div class="chips">${Object.entries(TOPICS).map(([k,v])=>`<button class="chip ${ob.topics.includes(k)?'on':''}" onclick="tg('${k}')">${v}</button>`).join('')}</div></div>
-<div class="card crisis sm"><b>Importante:</b> Refugio te da técnicas de autocuidado, pero no reemplaza a un profesional. Si estás en peligro o piensas en hacerte daño, llama ahora a la <b>Línea 106</b> (gratis, 24 horas) o al <b>123</b>.</div>
+<div class="card crisis sm"><b>Importante:</b> Refugio te da técnicas de autocuidado, pero no reemplaza a un profesional. Si estás en peligro o piensas en hacerte daño, llama ahora a la <b>Línea 106</b> (gratis, 24 horas) o al <b>123</b>. Si eres menor de 18 años, úsala con el acompañamiento de un adulto de confianza.</div>
 <button class="btn pri full" onclick="startApp()">Entrar a mi refugio</button>`}
 function tg(k){ob.name=($('#obn')||{}).value||ob.name;ob.topics=ob.topics.includes(k)?ob.topics.filter(x=>x!==k):[...ob.topics,k];render()}
 function startApp(){if(!lic){lic={trial:1,date:iso(today())};store.set('lic',lic)}P={name:(ob.name||'').trim()||'Amigo/a',topics:ob.topics.length?ob.topics:['ansiedad','estres'],start:iso(today())};save();go('inicio');
@@ -454,9 +454,16 @@ function openSettings(){modal(`<div class="row between"><h2>Ajustes</h2><button 
 <label class="f">Colores de la app</label><div class="chips">${[['auto','🌗 Automático'],['amanecer','🌅 Amanecer (claro)'],['noche','🌙 Noche (oscuro)']].map(([k,v])=>`<button class="chip ${(P.theme||'auto')===k?'on':''}" onclick="P.theme='${k}';save();applyTheme();openSettings()">${v}</button>`).join('')}</div><p class="xs mut" style="margin:6px 0 0">Automático: claro de 6 a. m. a 6 p. m. y oscuro en la noche.</p>
 <button class="btn ghost full" style="margin-top:14px" onclick="setPin()">🔒 ${P.pin?'Cambiar o quitar PIN':'Proteger con PIN'}</button>
 <label class="row" style="margin-top:14px;cursor:pointer"><input type="checkbox" style="width:22px;height:22px" ${P.voice!==false?'checked':''} onchange="P.voice=this.checked;save()"> <span>Voz guía en los ejercicios</span></label>
-<p class="sm mut" style="margin-top:18px">Tus datos se guardan solo en este celular. Nadie más puede verlos.</p>
+<p class="sm mut" style="margin-top:18px">Tus datos se guardan solo en este celular. Nadie más puede verlos. El respaldo contiene tus notas privadas: guárdalo solo en un lugar seguro y no lo compartas.</p>
 <button class="btn ghost full" onclick="copyBk()">Copiar respaldo</button><textarea id="bk" style="margin-top:8px;min-height:60px" placeholder="Pega aquí un respaldo para restaurarlo"></textarea><button class="btn ghost full" style="margin-top:8px" onclick="restoreBk()">Restaurar respaldo</button><div id="bkm" class="sm" style="color:var(--ac);margin-top:6px"></div>
-<button class="btn ghost full" style="margin-top:14px;color:var(--sos)" onclick="if(this.dataset.c){localStorage.clear();location.reload()}else{this.dataset.c=1;this.textContent='Toca otra vez para borrar todo'}">Borrar todos mis datos</button>`)}
+<button class="btn ghost full" style="margin-top:14px;color:var(--sos)" onclick="if(this.dataset.c){localStorage.clear();location.reload()}else{this.dataset.c=1;this.textContent='Toca otra vez para borrar todo'}">Borrar todos mis datos</button>
+<button class="btn ghost full" style="margin-top:10px" onclick="vLegal()">📄 Privacidad y términos</button>`)}
+function vLegal(){modal(`<h2>📄 Privacidad y términos</h2>
+<div class="card"><b>No es terapia</b><p class="sm mut" style="margin-top:4px">Refugio ofrece técnicas de autocuidado y psicoeducación. No hace diagnósticos, no reemplaza a un psicólogo o médico y no es un servicio de emergencias. Si estás en peligro llama al <b>106</b> o al <b>123</b>.</p></div>
+<div class="card"><b>Tus datos</b><p class="sm mut" style="margin-top:4px">Todo lo que escribes (ánimo, notas, pruebas, plan de seguridad) se guarda solo en este celular. LV Studio no tiene servidores ni ve tu información, ni la vende o comparte. Puedes borrarla cuando quieras desde Ajustes. Si borras la app sin respaldo, se pierde.</p></div>
+<div class="card"><b>Menores de edad</b><p class="sm mut" style="margin-top:4px">Si tienes menos de 18 años, usa Refugio con el acompañamiento de tu familia o un adulto de confianza.</p></div>
+<div class="card"><b>Licencia</b><p class="sm mut" style="margin-top:4px">Licencia de uso personal. No se permite revender ni copiar el código. Prueba gratis de ${TRIAL} días. Por ser un producto digital, puedes pedir devolución dentro de 5 días hábiles de la compra (retracto). La app se entrega como está.</p></div>
+<a class="btn pri full" href="https://wa.me/${SOPORTE}" target="_blank">Soporte: WhatsApp 320 290 3722</a>`)}
 async function copyBk(){const t=btoa(unescape(encodeURIComponent(JSON.stringify({lic,P,moods,uses,thoughts,grat,plan,notes,tests,progs,contacts}))));try{await navigator.clipboard.writeText(t);$('#bkm').textContent='Respaldo copiado. Guárdalo en tus notas.'}catch(e){$('#bk').value=t;$('#bkm').textContent='Copia el texto del recuadro.'}}
 function restoreBk(){try{const d=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));({P,moods,uses,thoughts,grat,plan,notes}=d);tests=d.tests||[];progs=d.progs||{};contacts=d.contacts||[];if(d.lic){lic=d.lic;store.set('lic',lic)}save();closeM();render()}catch(e){$('#bkm').textContent='El respaldo no es válido.'}}
 
