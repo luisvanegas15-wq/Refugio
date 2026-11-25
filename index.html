@@ -71,7 +71,7 @@ a{color:var(--ac)}
 <div id="scr"></div><div id="modal"></div>
 <script>
 /* ===== Licencia ===== */
-const APP_URL='https://luisvanegas15-wq.github.io/Refugio/',SOPORTE='573202903722',SECRET='',TRIAL=7;
+const APP_URL='https://luisvanegas15-wq.github.io/Refugio/',SOPORTE='573187179215',SECRET='',TRIAL=7;
 function h53(str,seed=0){let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677)}
 h1=Math.imul(h1^(h1>>>16),2246822507);h1^=Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507);h2^=Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0)}
 const normN=n=>(n||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'');
@@ -463,7 +463,7 @@ function vLegal(){modal(`<h2>📄 Privacidad y términos</h2>
 <div class="card"><b>Tus datos</b><p class="sm mut" style="margin-top:4px">Todo lo que escribes (ánimo, notas, pruebas, plan de seguridad) se guarda solo en este celular. LV Studio no tiene servidores ni ve tu información, ni la vende o comparte. Puedes borrarla cuando quieras desde Ajustes. Si borras la app sin respaldo, se pierde.</p></div>
 <div class="card"><b>Menores de edad</b><p class="sm mut" style="margin-top:4px">Si tienes menos de 18 años, usa Refugio con el acompañamiento de tu familia o un adulto de confianza.</p></div>
 <div class="card"><b>Licencia</b><p class="sm mut" style="margin-top:4px">Licencia de uso personal. No se permite revender ni copiar el código. Prueba gratis de ${TRIAL} días. Por ser un producto digital, puedes pedir devolución dentro de 5 días hábiles de la compra (retracto). La app se entrega como está.</p></div>
-<a class="btn pri full" href="https://wa.me/${SOPORTE}" target="_blank">Soporte: WhatsApp 320 290 3722</a>`)}
+<a class="btn pri full" href="https://wa.me/${SOPORTE}" target="_blank">Soporte: WhatsApp 318 717 9215</a>`)}
 async function copyBk(){const t=btoa(unescape(encodeURIComponent(JSON.stringify({lic,P,moods,uses,thoughts,grat,plan,notes,tests,progs,contacts}))));try{await navigator.clipboard.writeText(t);$('#bkm').textContent='Respaldo copiado. Guárdalo en tus notas.'}catch(e){$('#bk').value=t;$('#bkm').textContent='Copia el texto del recuadro.'}}
 function restoreBk(){try{const d=JSON.parse(decodeURIComponent(escape(atob($('#bk').value.trim()))));({P,moods,uses,thoughts,grat,plan,notes}=d);tests=d.tests||[];progs=d.progs||{};contacts=d.contacts||[];if(d.lic){lic=d.lic;store.set('lic',lic)}save();closeM();render()}catch(e){$('#bkm').textContent='El respaldo no es válido.'}}
 
@@ -471,6 +471,6 @@ window.addEventListener('hashchange',()=>{const t=location.hash.slice(1);if(NAV[
 if(!NAV[tab])tab='inicio';render();
 if('serviceWorker' in navigator&&location.hostname.endsWith('github.io'))try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}
 </script>
-<script>(function(){const m=(location.hash||'').match(/activar=([^&]+)/);if(!m)return;verifyLic(decodeURIComponent(m[1])).then(n=>{try{history.replaceState(null,'',location.pathname)}catch(e){}if(n)licOK(n);else{const M='Ese enlace de activación no es válido. Escríbenos por WhatsApp al 320 290 3722.';showAct=true;render();const e=document.getElementById('aerr');if(e)e.textContent=M;else{const d=document.createElement('div');d.textContent=M;d.style.cssText='position:fixed;left:16px;right:16px;bottom:24px;z-index:9999;background:#c4473d;color:#fff;padding:14px;border-radius:12px;font:600 15px system-ui;text-align:center';document.body.appendChild(d);setTimeout(()=>d.remove(),8000)}}})})();</script>
+<script>(function(){const m=(location.hash||'').match(/activar=([^&]+)/);if(!m)return;verifyLic(decodeURIComponent(m[1])).then(n=>{try{history.replaceState(null,'',location.pathname)}catch(e){}if(n)licOK(n);else{const M='Ese enlace de activación no es válido. Escríbenos por WhatsApp al 318 717 9215.';showAct=true;render();const e=document.getElementById('aerr');if(e)e.textContent=M;else{const d=document.createElement('div');d.textContent=M;d.style.cssText='position:fixed;left:16px;right:16px;bottom:24px;z-index:9999;background:#c4473d;color:#fff;padding:14px;border-radius:12px;font:600 15px system-ui;text-align:center';document.body.appendChild(d);setTimeout(()=>d.remove(),8000)}}})})();</script>
 </body>
 </html>
